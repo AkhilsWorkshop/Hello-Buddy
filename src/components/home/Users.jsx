@@ -4,7 +4,7 @@ import { AiFillStar } from "react-icons/ai"
 const Users = () => {
     return (
         <div className="bg-secondary">
-            <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-10 p-8 md:p-10 border-primary">
+            <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-10 p-8 md:p-10">
 
                 <div className="flex-1">
                     <img alt="heroImage" src={safeImg} />

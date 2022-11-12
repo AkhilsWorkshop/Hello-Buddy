@@ -22,7 +22,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="z-50 h-20 bg-secondary text-fourth shadow-2xl shadow-primary">
+            <div className="absolute top-0 w-full h-20 bg-secondary text-fourth shadow-2xl shadow-primary">
 
                 <div className="relative flex items-center justify-between h-full px-10">
 
