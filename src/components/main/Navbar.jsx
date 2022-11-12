@@ -1,5 +1,6 @@
 import { Squeeze as Hamburger } from 'hamburger-react'
 import { useState } from "react"
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -9,14 +10,17 @@ const Navbar = () => {
         {
             id: 1,
             name: "About us",
+            url: "/about",
         },
         {
             id: 2,
             name: "Features",
+            url: "/features",
         },
         {
             id: 3,
             name: "Login",
+            url: "/login",
         }
     ]
 
@@ -26,13 +30,13 @@ const Navbar = () => {
 
                 <div className="relative flex items-center justify-between h-full px-10">
 
-                    <h1 className="text-2xl sm:text-4xl font-bold">HELLO BUDDY!</h1>
+                    <Link to="/" className="text-2xl sm:text-4xl font-bold">HELLO BUDDY!</Link>
 
                     <div className="hidden md:flex gap-8 items-center">
                         {menuItems.map((eachItem, index) => (
-                            <button key={index} className="flex hover:text-third duration-300 transition-all">{eachItem.name}</button>
+                            <Link to={eachItem.url} key={index} className="flex hover:text-third duration-300 transition-all">{eachItem.name}</Link>
                         ))}
-                        <button className="border-2 border-third rounded-lg p-2 px-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</button>
+                        <Link to="/register" className="border-2 border-third rounded-lg p-2 px-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
                     </div>
 
                     <div className="flex md:hidden">
@@ -44,11 +48,11 @@ const Navbar = () => {
                             <div>
                                 {menuItems.map((eachItem, index) => (
                                     <div key={index} className="border border-t-0 border-x-0 border-primary px-10 py-5">
-                                        <button className="text-xl hover:text-third duration-300 transition-all">{eachItem.name}</button>
+                                        <Link to={eachItem.url} className="text-xl hover:text-third duration-300 transition-all">{eachItem.name}</Link>
                                     </div>
                                 ))}
                             </div>
-                            <button className="mx-10 my-5 gap-1 border-2 text-xl border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</button>
+                            <Link to="/register" className="mx-10 my-5 gap-1 border-2 text-xl border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
                         </div>
                     </div>
                 </div>
