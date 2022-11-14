@@ -1,31 +1,27 @@
-import { useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import registerImg from "../../assets/images/user/registerImg.svg"
-import { useAuth } from "../../server/user/contexts/AuthContext"
+import { UserAuth } from "../../server/context/AuthContext"
 
 const Register = () => {
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
-    const nameRef = useRef()
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const { signUp, currentUser } = useAuth()
+    const { createUser } = UserAuth();
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
+        setError('');
         try {
-            setError('');
-            setLoading(true)
-            await signUp(emailRef.current.value, passwordRef.current.value)
-        } catch {
-            setError('Failed')
+            await createUser(email, password);
+            navigate("/dashboard")
+        } catch (e) {
+            setError(e.message);
+            console.log(e.message);
         }
-
-        setLoading(false)
-
-    }
+    };
 
     return (
         <div className="bg-fourth">
@@ -45,20 +41,25 @@ const Register = () => {
                         <p className="font-bold text-2xl">Save money now,</p>
                         <p className="text-sm text-center">Create an account to register your subscriptions and start saving!</p>
                     </div>
-                    {error && <p>{error}</p>}
                     <form className="flex flex-col" onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <label htmlFor="name" className="block mb-2 text-sm font-medium">Your name</label>
-                            <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="Full name" ref={nameRef} required />
+                            <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="Full name" />
                         </div>
                         <div className="mb-6">
                             <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email address</label>
-                            <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" ref={emailRef} required />
+                            <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required />
                         </div>
                         <div className="mb-6">
                             <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
-                            <input type="password" id="password" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" ref={passwordRef} required />
+                            <input type="password" id="password" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
+                        {error
+                            &&
+                            <div className="mb-6">
+                                <p className="border-2 rounded-md border-[#ff3131] bg-[#ff3131]/40 px-5 py-5">{error}</p>
+                            </div>
+                        }
                         <button type="submit" className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Get started </button>
                     </form>
                     <div className="flex gap-2 justify-center items-center">

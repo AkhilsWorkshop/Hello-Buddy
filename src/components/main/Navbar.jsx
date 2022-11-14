@@ -17,11 +17,6 @@ const Navbar = () => {
             name: "Features",
             url: "/features",
         },
-        {
-            id: 3,
-            name: "Login",
-            url: "/login",
-        }
     ]
 
     return (
@@ -36,6 +31,9 @@ const Navbar = () => {
                         {menuItems.map((eachItem, index) => (
                             <Link to={eachItem.url} key={index} className="flex hover:text-third duration-300 transition-all">{eachItem.name}</Link>
                         ))}
+
+                        <Link to="/login" className="flex hover:text-third duration-300 transition-all">Login</Link>
+
                         <Link to="/register" className="border-2 border-third rounded-lg p-2 px-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
                     </div>
 
@@ -52,7 +50,10 @@ const Navbar = () => {
                                     </div>
                                 ))}
                             </div>
-                            <Link to="/register" className="mx-10 my-5 gap-1 border-2 text-xl border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
+                            <div className="border border-t-0 border-x-0 border-primary px-10 py-5">
+                                <Link to="/login" className="text-xl hover:text-third duration-300 transition-all">Login</Link>
+                            </div>
+                            <Link to="/register" className="mx-10 my-5 gap-1 border-2 text-xl text-center border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
                         </div>
                     </div>
                 </div>
