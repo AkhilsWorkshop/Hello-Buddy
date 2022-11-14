@@ -5,6 +5,7 @@ import heroImg from "../../assets/images/home/heroImg.svg"
 const Hero = () => {
     return (
         <div className="bg-gradient-to-br from-fourth via-third/40 to-fourth">
+
             <div className="max-w-screen-xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 p-8 md:p-10 mt-20">
 
                 <div className="flex flex-col flex-1 gap-5 text-secondary">
@@ -22,7 +23,6 @@ const Hero = () => {
                 </div>
 
             </div>
-
 
         </div>
     )
