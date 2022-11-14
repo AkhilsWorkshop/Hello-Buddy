@@ -1,10 +1,24 @@
 import { Squeeze as Hamburger } from 'hamburger-react'
 import { useState } from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserAuth } from '../../server/context/AuthContext'
 
 const Navbar = () => {
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const { user, logout } = UserAuth()
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            navigate("/")
+            console.log("Logged out")
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
 
     const menuItems = [
         {
@@ -31,10 +45,13 @@ const Navbar = () => {
                         {menuItems.map((eachItem, index) => (
                             <Link to={eachItem.url} key={index} className="flex hover:text-third duration-300 transition-all">{eachItem.name}</Link>
                         ))}
-
-                        <Link to="/login" className="flex hover:text-third duration-300 transition-all">Login</Link>
-
-                        <Link to="/register" className="border-2 border-third rounded-lg p-2 px-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
+                        {user
+                            ?
+                            <></>
+                            :
+                            <Link to="/login" className="flex hover:text-third duration-300 transition-all">Login</Link>
+                        }
+                        <Link to={user ? "/dashboard" : "/register"} className="border-2 border-third rounded-lg p-2 px-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">{user ? "My Account" : "Create an Account"}</Link>
                     </div>
 
                     <div className="flex lg:hidden">
@@ -50,10 +67,15 @@ const Navbar = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div className="border border-t-0 border-x-0 border-primary px-10 py-5">
-                                <Link to="/login" className="text-xl hover:text-third duration-300 transition-all">Login</Link>
-                            </div>
-                            <Link to="/register" className="mx-10 my-5 gap-1 border-2 text-xl text-center border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">Create an Account</Link>
+                            {user
+                                ?
+                                <></>
+                                :
+                                <div className="border border-t-0 border-x-0 border-primary px-10 py-5">
+                                    <Link to="/login" className="text-xl hover:text-third duration-300 transition-all">Login</Link>
+                                </div>
+                            }
+                            <Link to={user ? "/dashboard" : "/register"} className="mx-10 my-5 gap-1 border-2 text-xl text-center border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">{user ? "My Account" : "Create an Account"}</Link>
                         </div>
                     </div>
                 </div>

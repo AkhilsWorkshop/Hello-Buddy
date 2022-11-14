@@ -5,18 +5,18 @@ import { UserAuth } from '../../server/context/AuthContext';
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('')
+    const [message, setMessage] = useState('')
     const { resetPassword } = UserAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
+        setMessage('');
         try {
             await resetPassword(email);
-            navigate("/login")
+            setMessage("Check you email for instructions!");
         } catch (e) {
-            setError(e.message);
+            setMessage(e.message);
             console.log(e.message);
         }
     };
@@ -37,8 +37,17 @@ const ForgotPassword = () => {
                             <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email</label>
                             <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required />
                         </div>
-                        <button type="submit" className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Reset Password</button>
+                        {message
+                            ?
+                            <div className="mb-6">
+                                <p className="border-2 rounded-md border-[#198000] bg-[#198000]/40 px-5 py-5 text-center">{message}</p>
+                            </div>
+                            :
+                            <button type="submit" className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Reset Password</button>
+                        }
+
                     </form>
+
                     <div className="flex gap-2 justify-center items-center">
                         <Link to="/login" className="font-semibold text-lg text-third">Login</Link>
                     </div>
