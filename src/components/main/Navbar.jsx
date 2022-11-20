@@ -2,6 +2,7 @@ import { Squeeze as Hamburger } from 'hamburger-react'
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../server/context/AuthContext'
+import logo from "../../assets/images/common/logo.svg"
 
 const Navbar = () => {
 
@@ -39,7 +40,9 @@ const Navbar = () => {
 
                 <div className="relative flex items-center justify-between h-full px-10">
 
-                    <Link to="/" className="text-2xl sm:text-4xl font-bold">HELLO BUDDY!</Link>
+                    <Link to="/" className='w-[12rem] lg:w-[15rem]'>
+                        <img src={logo} alt="Hello Buddy" className="" />
+                    </Link>
 
                     <div className="hidden lg:flex gap-8 items-center">
                         {menuItems.map((eachItem, index) => (
