@@ -10,6 +10,8 @@ export const AuthContextProvider = ({ children }) => {
 
     const [user, setUser] = useState({})
 
+    const [isActive, setIsActive] = useState(0);
+
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
@@ -30,6 +32,10 @@ export const AuthContextProvider = ({ children }) => {
         return updateEmail(auth, email)
     }
 
+    const switchTab = (index) => {
+        setIsActive(index)
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log(currentUser)
@@ -41,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, user }}>
+        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, user, isActive, switchTab }}>
             {children}
         </UserContext.Provider>
     )
