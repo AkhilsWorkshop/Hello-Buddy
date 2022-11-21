@@ -22,8 +22,6 @@ const Register = () => {
             const res = await createUser(email, password);
             await setDoc(doc(db, "users", res.user.uid), {
                 userName: name,
-                userEmail: email,
-                timestamp: getCurrentTime()
             });
             console.log(res)
             navigate("/dashboard")

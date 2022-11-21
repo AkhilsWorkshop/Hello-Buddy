@@ -30,6 +30,16 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
+    const addServiceData = async (name, type, price, start, end) => {
+        await setDoc(doc(db, "users", user.uid), {
+            serviceName: name,
+            serviceType: type,
+            servicePrice: price,
+            serviceStart: start,
+            serviceEnd: end
+        });
+    }
+
     const updateUserData = async (value) => {
         const docRef = doc(db, "users");
         await updateDoc(docRef, {
@@ -84,7 +94,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime }}>
+        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData }}>
             {children}
         </UserContext.Provider>
     )
