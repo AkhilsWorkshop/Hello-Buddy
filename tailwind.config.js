@@ -9,6 +9,8 @@ module.exports = {
       'secondary': '#222831',
       'third': '#00ADB5',
       'fourth': '#EEEEEE',
+      success: '#4ba634',
+      fail: '#ff3131',
     },
     extend: {},
   },

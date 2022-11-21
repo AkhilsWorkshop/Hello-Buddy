@@ -1,6 +1,7 @@
 import SideMenu from "../dashboard/SideMenu"
 import { Tab } from '@headlessui/react'
 import Content from "../dashboard/Content"
+import MessageAlert from "../common/MessageAlert"
 
 const Dashboard = () => {
 

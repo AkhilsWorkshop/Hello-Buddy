@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai"
 import { RiSettings3Fill } from "react-icons/ri"
 import { UserAuth } from "../../server/context/AuthContext"
+import MessageAlert from "../common/MessageAlert";
 import ContentTitle from "./ContentTitle"
 
 const AccountSettings = () => {
@@ -37,6 +38,8 @@ const AccountSettings = () => {
         <>
             {user ?
                 <div className="flex flex-col gap-5 w-full">
+
+                    <MessageAlert alertName="Verification mail sent" alertMessage="Check your mail to confirm your account" alertType="success" />
 
                     <ContentTitle title="Account Settings" imageIcon={<RiSettings3Fill size={25} />} />
 
