@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { AuthErrorCodes, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateEmail } from "firebase/auth";
-import { auth } from "../user/fireBase";
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail } from "firebase/auth";
+import { auth, db } from "../user/fireBase";
+import { doc, setDoc, addDoc, getDoc, updateDoc } from "firebase/firestore";
 
 // Creating a new context
 const UserContext = createContext()
@@ -10,11 +11,31 @@ export const AuthContextProvider = ({ children }) => {
 
     const [user, setUser] = useState({})
 
+    const [userData, setUserData] = useState({})
+
     const [isActive, setIsActive] = useState(0);
 
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
+
+    const getUserData = async (currentUser) => {
+        const docRef = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        try {
+            console.log("Document data:", docSnap.data());
+            setUserData(docSnap.data());
+        } catch {
+            console.log("No documents found")
+        }
+    }
+
+    const updateUserData = async (value) => {
+        const docRef = doc(db, "users");
+        await updateDoc(docRef, {
+            userName: value
+        });
+    }
 
     const login = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
@@ -28,18 +49,34 @@ export const AuthContextProvider = ({ children }) => {
         return sendPasswordResetEmail(auth, email)
     }
 
+    const verifyEmail = () => {
+        return sendEmailVerification(user)
+    }
+
     const updateEmailAddress = (email) => {
         return updateEmail(auth, email)
     }
 
+    // Other Functions
+
+    // For switching active tab in Dashboard
     const switchTab = (index) => {
         setIsActive(index)
+    }
+
+    // For getting current time
+    const getCurrentTime = () => {
+        const date = new Date();
+        console.log(date)
+        return date
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log(currentUser)
             setUser(currentUser)
+            getUserData(currentUser)
+
         })
         return () => {
             unsubscribe()
@@ -47,7 +84,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, user, isActive, switchTab }}>
+        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime }}>
             {children}
         </UserContext.Provider>
     )

@@ -1,6 +1,3 @@
-
-import { UserAuth } from "../../server/context/AuthContext"
-import AccountSettings from "../dashboard/AccountSettings"
 import SideMenu from "../dashboard/SideMenu"
 import { Tab } from '@headlessui/react'
 import Content from "../dashboard/Content"
@@ -19,6 +16,7 @@ const Dashboard = () => {
                         <Content />
                     </div>
                 </Tab.Group>
+
             </div>
 
         </div>

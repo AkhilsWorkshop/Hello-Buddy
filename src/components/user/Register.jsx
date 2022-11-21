@@ -2,24 +2,35 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import registerImg from "../../assets/images/user/registerImg.svg"
 import { UserAuth } from "../../server/context/AuthContext"
+import { BiError } from "react-icons/bi"
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
+import { db } from "../../server/user/fireBase"
 
 const Register = () => {
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('')
-    const { createUser } = UserAuth();
+    const { createUser, getCurrentTime } = UserAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         try {
-            await createUser(email, password);
+            const res = await createUser(email, password);
+            await setDoc(doc(db, "users", res.user.uid), {
+                userName: name,
+                userEmail: email,
+                timestamp: getCurrentTime()
+            });
+            console.log(res)
             navigate("/dashboard")
         } catch (e) {
-            setError(e.message);
-            console.log(e.message);
+            e.code === "auth/email-already-in-use" ? setError("Account already exists") : setError("Error Occured! Try Again")
+
+            console.log(e.code);
         }
     };
 
@@ -43,8 +54,8 @@ const Register = () => {
                     </div>
                     <form className="flex flex-col" onSubmit={handleSubmit}>
                         <div className="mb-6">
-                            <label htmlFor="name" className="block mb-2 text-sm font-medium">Your name</label>
-                            <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="Full name" />
+                            <label htmlFor="name" className="block mb-2 text-sm font-medium">Your full name</label>
+                            <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="Tessa Hardin" onChange={(e) => setName(e.target.value)} required />
                         </div>
                         <div className="mb-6">
                             <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email address</label>
@@ -56,8 +67,9 @@ const Register = () => {
                         </div>
                         {error
                             &&
-                            <div className="mb-6">
-                                <p className="border-2 rounded-md border-[#ff3131] bg-[#ff3131]/40 px-5 py-5">{error}</p>
+                            <div className="flex justify-center items-center gap-1 mb-6 border rounded-md text-fourth bg-[#b8352b] py-2">
+                                <BiError size={25} />
+                                <p className="text-sm">{error}</p>
                             </div>
                         }
                         <button type="submit" className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Get started </button>

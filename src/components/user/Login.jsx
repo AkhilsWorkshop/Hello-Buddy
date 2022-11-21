@@ -9,7 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('')
-    const { login } = UserAuth();
+    const { login, getUserData } = UserAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -17,7 +17,7 @@ const Login = () => {
         setError('');
         try {
             await login(email, password);
-            navigate("/dashboard")
+            navigate("/dashboard");
         } catch (e) {
             setError(e.message);
             console.log(e.message);
