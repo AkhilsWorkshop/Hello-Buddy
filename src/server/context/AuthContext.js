@@ -54,7 +54,7 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     const updateEmailAddress = (email) => {
-        return updateEmail(auth, email)
+        return updateEmail(user, email)
     }
 
     // Other Functions
