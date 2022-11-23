@@ -1,11 +1,11 @@
 import { MdDesignServices } from "react-icons/md"
-import { UserAuth } from "../../server/context/AuthContext"
+import { UserAuth } from "../../server/AuthContext"
 import MessageAlert from "../common/MessageAlert"
 import ContentTitle from "./ContentTitle"
 import { Dialog, Disclosure, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { doc, setDoc } from "firebase/firestore"
-import { db } from "../../server/user/fireBase"
+import { db } from "../../server/fireBase"
 
 const Services = () => {
 

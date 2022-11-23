@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserAuth } from '../../server/context/AuthContext';
+import { UserAuth } from '../../server/AuthContext';
 import forgotImg from "../../assets/images/user/forgotImg.svg"
 
 const ForgotPassword = () => {

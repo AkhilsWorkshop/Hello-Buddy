@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { sideMenu } from '../../data/DashboardData'
-import { UserAuth } from '../../server/context/AuthContext';
+import { UserAuth } from '../../server/AuthContext';
 import { Menu } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom';
 

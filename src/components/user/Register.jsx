@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import registerImg from "../../assets/images/user/registerImg.svg"
-import { UserAuth } from "../../server/context/AuthContext"
+import { UserAuth } from "../../server/AuthContext"
 import { BiError } from "react-icons/bi"
 import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
-import { db } from "../../server/user/fireBase"
+import { db } from "../../server/fireBase"
 
 const Register = () => {
 

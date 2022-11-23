@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai"
 import { RiSettings3Fill } from "react-icons/ri"
-import { UserAuth } from "../../server/context/AuthContext"
+import { UserAuth } from "../../server/AuthContext"
 import MessageAlert from "../common/MessageAlert";
 import ContentTitle from "./ContentTitle"
 

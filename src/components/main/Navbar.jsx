@@ -1,7 +1,7 @@
 import { Squeeze as Hamburger } from 'hamburger-react'
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { UserAuth } from '../../server/context/AuthContext'
+import { UserAuth } from '../../server/AuthContext'
 import logo from "../../assets/images/common/logo.svg"
 
 const Navbar = () => {
