@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { BiError } from "react-icons/bi"
 import { Link, useNavigate } from "react-router-dom"
 import loginImg from "../../assets/images/user/loginImg.svg"
 import { UserAuth } from "../../server/AuthContext"
@@ -19,8 +20,18 @@ const Login = () => {
             await login(email, password);
             navigate("/dashboard");
         } catch (e) {
-            setError(e.message);
-            console.log(e.message);
+            switch (e.code) {
+                case "auth/user-not-found":
+                    setError("Account not found");
+                    break;
+                case "auth/wrong-password":
+                    setError("Incorrect password");
+                    break;
+                default:
+                    setError("Error Occured! Try Again");
+                    break;
+            }
+            console.log(e.code)
         }
     };
 
@@ -52,6 +63,13 @@ const Login = () => {
                             <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
                             <input type="password" id="password" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
+                        {error
+                            &&
+                            <div className="flex justify-center items-center gap-1 mb-6 border rounded-md text-fourth bg-[#b8352b] py-2">
+                                <BiError size={25} />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        }
                         <button type="submit" className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Login</button>
                     </form>
                     <div className="flex gap-2 justify-center items-center">

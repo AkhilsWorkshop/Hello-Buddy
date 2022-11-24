@@ -4,7 +4,7 @@ import { auth, db } from "./fireBase";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 // Creating a new context
-const UserContext = createContext()
+const UserContext = createContext(null)
 
 // Exporting to provide on App
 export const AuthContextProvider = ({ children }) => {
@@ -18,6 +18,14 @@ export const AuthContextProvider = ({ children }) => {
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
+
+    const saveAccountDetails = async (userID, fullName, age, currencyType) => {
+        await setDoc(doc(db, "userData", userID), {
+            fullName: fullName,
+            age: age,
+            currencyType: currencyType
+        });
+    }
 
     const getUserData = async (currentUser) => {
         const docRef = doc(db, "users", currentUser.uid);
@@ -94,7 +102,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData }}>
+        <UserContext.Provider value={{ createUser, saveAccountDetails, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData }}>
             {children}
         </UserContext.Provider>
     )

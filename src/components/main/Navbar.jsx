@@ -61,7 +61,7 @@ const Navbar = () => {
                         <Hamburger toggled={isOpen} toggle={setIsOpen} />
                     </div>
 
-                    <div className={`absolute z-40 h-auto w-full top-20 left-0 duration-300 transition-all  ${isOpen ? "flex" : "top-[-300px]"}`}>
+                    <div className={`absolute z-40 h-auto w-full top-20 left-0 duration-300 transition-all  ${isOpen ? "flex" : "top-[-350px]"}`}>
                         <div className="flex lg:hidden flex-col w-full bg-secondary text-fourth">
                             <div>
                                 {menuItems.map((eachItem, index) => (

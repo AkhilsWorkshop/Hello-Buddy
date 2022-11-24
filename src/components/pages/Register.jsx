@@ -3,31 +3,23 @@ import { Link, useNavigate } from "react-router-dom"
 import registerImg from "../../assets/images/user/registerImg.svg"
 import { UserAuth } from "../../server/AuthContext"
 import { BiError } from "react-icons/bi"
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore"
-import { db } from "../../server/fireBase"
 
 const Register = () => {
 
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('')
-    const { createUser, getCurrentTime } = UserAuth();
+    const [error, setError] = useState('');
+    const { createUser } = UserAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         try {
-            const res = await createUser(email, password);
-            await setDoc(doc(db, "users", res.user.uid), {
-                userName: name,
-            });
-            console.log(res)
-            navigate("/dashboard")
+            await createUser(email, password);
+            navigate("/setup-account")
         } catch (e) {
             e.code === "auth/email-already-in-use" ? setError("Account already exists") : setError("Error Occured! Try Again")
-
             console.log(e.code);
         }
     };
@@ -51,10 +43,6 @@ const Register = () => {
                         <p className="text-sm text-center">Create an account to register your subscriptions and start saving!</p>
                     </div>
                     <form className="flex flex-col" onSubmit={handleSubmit}>
-                        <div className="mb-6">
-                            <label htmlFor="name" className="block mb-2 text-sm font-medium">Your full name</label>
-                            <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="Tessa Hardin" onChange={(e) => setName(e.target.value)} required />
-                        </div>
                         <div className="mb-6">
                             <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email address</label>
                             <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required />
