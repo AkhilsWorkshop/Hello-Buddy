@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai"
 import { RiSettings3Fill } from "react-icons/ri"
+import { Link } from "react-router-dom";
 import { UserAuth } from "../../server/AuthContext"
 import MessageAlert from "../common/MessageAlert";
 import ContentTitle from "./ContentTitle"
@@ -64,7 +65,7 @@ const AccountSettings = () => {
             setAlert({
                 box: true,
                 name: "Error Occured",
-                message: e.message,
+                message: "Please wait for few seconds",
                 type: "fail"
             })
             console.log(e.message)
@@ -123,17 +124,16 @@ const AccountSettings = () => {
                         <div className="flex flex-col gap-2">
                             <label className="text-sm font-semibold">Full Name</label>
                             <div className="flex gap-2">
-                                <p className="text-md">{userData.userName}</p>
+                                <p className="text-md">{userData.fullName}</p>
                             </div>
                         </div>
 
-                        <form className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2">
                             <label htmlFor="name" className="text-sm font-semibold">Password</label>
                             <div className="flex gap-2">
-                                <input type="text" id="name" className="shadow-sm bg-fourth text-sm rounded-md grow md:grow-0 lg:w-1/3 p-2.5 py-3" required />
-                                <button className="p-3 bg-third rounded-md text-sm font-medium duration-200 hover:bg-third/80">Change</button>
+                                <Link to="/forgot-password" className="p-3 bg-third rounded-md text-sm font-medium duration-200 hover:bg-third/80">Reset Password</Link>
                             </div>
-                        </form>
+                        </div>
 
                     </div>
 

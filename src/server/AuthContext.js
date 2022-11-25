@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail } from "firebase/auth";
 import { auth, db } from "./fireBase";
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, addDoc, collection, getDocs } from "firebase/firestore";
 
 // Creating a new context
 const UserContext = createContext(null)
@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const [user, setUser] = useState({})
 
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null)
 
     const [isActive, setIsActive] = useState(0);
 
@@ -20,15 +20,16 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const saveAccountDetails = async (userID, fullName, age, currencyType) => {
-        await setDoc(doc(db, "userData", userID), {
+        const data = {
             fullName: fullName,
             age: age,
             currencyType: currencyType
-        });
+        };
+        await setDoc(doc(db, "userData", userID), data);
     }
 
     const getUserData = async (currentUser) => {
-        const docRef = doc(db, "users", currentUser.uid);
+        const docRef = doc(db, "userData", currentUser.uid);
         const docSnap = await getDoc(docRef);
         try {
             console.log("Document data:", docSnap.data());
@@ -38,14 +39,40 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
-    const addServiceData = async (name, type, price, start, end) => {
-        await setDoc(doc(db, "users", user.uid), {
-            serviceName: name,
-            serviceType: type,
-            servicePrice: price,
-            serviceStart: start,
-            serviceEnd: end
-        });
+    const getServiceData = async (currentUser) => {
+        const docRef = collection(db, currentUser.uid);
+        const docSnap = await getDocs(docRef);
+        try {
+            console.log("Document data:", docSnap.data());
+            setUserData(docSnap.data());
+        } catch {
+            console.log("No documents found")
+        }
+    }
+
+    // const addServiceData = async (userID, name, type, price, start, end) => {
+    //     const time = getCurrentTime()
+    //     const data = {
+    //         sName: name,
+    //         sType: type,
+    //         sPrice: price,
+    //         sStart: start,
+    //         sEnd: end
+    //     }
+    //     await setDoc(doc(db, `${userID}/${time}`), data);
+    // }
+
+    const addServiceData = async (userID, name, type, price, start, end) => {
+        const time = getCurrentTime()
+        const data = {
+            sName: name,
+            sType: type,
+            sPrice: price,
+            sStart: start,
+            sEnd: end
+        }
+        await db.collection(`${userID}`).add(data)
+        // await setDoc(doc(db, `${userID}/${time}`), data);
     }
 
     const updateUserData = async (value) => {
@@ -84,7 +111,7 @@ export const AuthContextProvider = ({ children }) => {
 
     // For getting current time
     const getCurrentTime = () => {
-        const date = new Date();
+        const date = Date.now();
         console.log(date)
         return date
     }
@@ -94,6 +121,7 @@ export const AuthContextProvider = ({ children }) => {
             console.log(currentUser)
             setUser(currentUser)
             getUserData(currentUser)
+            getServiceData(currentUser)
 
         })
         return () => {
