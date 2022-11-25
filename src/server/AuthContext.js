@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail } from "firebase/auth";
 import { auth, db } from "./fireBase";
-import { doc, setDoc, getDoc, updateDoc, addDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, addDoc, collection, getDocs, serverTimestamp, onSnapshot } from "firebase/firestore";
 
 // Creating a new context
 const UserContext = createContext(null)
@@ -12,6 +12,8 @@ export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState({})
 
     const [userData, setUserData] = useState(null)
+
+    const [serviceData, setServiceData] = useState(null)
 
     const [isActive, setIsActive] = useState(0);
 
@@ -39,40 +41,27 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
-    const getServiceData = async (currentUser) => {
-        const docRef = collection(db, currentUser.uid);
-        const docSnap = await getDocs(docRef);
-        try {
-            console.log("Document data:", docSnap.data());
-            setUserData(docSnap.data());
-        } catch {
-            console.log("No documents found")
-        }
-    }
-
-    // const addServiceData = async (userID, name, type, price, start, end) => {
-    //     const time = getCurrentTime()
-    //     const data = {
-    //         sName: name,
-    //         sType: type,
-    //         sPrice: price,
-    //         sStart: start,
-    //         sEnd: end
-    //     }
-    //     await setDoc(doc(db, `${userID}/${time}`), data);
-    // }
-
     const addServiceData = async (userID, name, type, price, start, end) => {
-        const time = getCurrentTime()
+        const time = new Date();
+        const dateTime = time.getDate() + "/" + time.getMonth() + "/" + time.getFullYear() + " " + time.getHours() + ":" + time.getMinutes()
         const data = {
+            clientTime: dateTime,
+            serverTime: serverTimestamp(),
             sName: name,
             sType: type,
             sPrice: price,
             sStart: start,
             sEnd: end
         }
-        await db.collection(`${userID}`).add(data)
-        // await setDoc(doc(db, `${userID}/${time}`), data);
+        const dbRef = collection(db, `${userID}`);
+        await addDoc(dbRef, data);
+        // await addDoc(doc(db, `${userID}`), data);
+    }
+
+
+    const getServiceData = async (userID) => {
+        const querySnapshot = await getDocs(collection(db, userID));
+        setServiceData(querySnapshot)
     }
 
     const updateUserData = async (value) => {
@@ -121,8 +110,7 @@ export const AuthContextProvider = ({ children }) => {
             console.log(currentUser)
             setUser(currentUser)
             getUserData(currentUser)
-            getServiceData(currentUser)
-
+            getServiceData(currentUser.uid)
         })
         return () => {
             unsubscribe()
@@ -130,7 +118,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, saveAccountDetails, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData }}>
+        <UserContext.Provider value={{ createUser, saveAccountDetails, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData, serviceData }}>
             {children}
         </UserContext.Provider>
     )

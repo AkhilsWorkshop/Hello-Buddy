@@ -3,13 +3,13 @@ import { UserAuth } from "../../server/AuthContext"
 import MessageAlert from "../common/MessageAlert"
 import ContentTitle from "./ContentTitle"
 import { Disclosure } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Services = () => {
 
     const tableHeader = ["Name", "Type", "Price", "Subscribed on", "Due"]
 
-    const { user, userData, addServiceData } = UserAuth();
+    const { user, userData, addServiceData, serviceData } = UserAuth();
 
     const [serviceName, setServiceName] = useState("")
     const [serviceType, setServiceType] = useState("Monthly")
@@ -18,6 +18,10 @@ const Services = () => {
     const [serviceEnd, setServiceEnd] = useState("")
 
     const sendToDB = async (e) => {
+
+        serviceData.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+        });
 
         e.preventDefault()
         try {
