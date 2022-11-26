@@ -40,11 +40,10 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
-    const addServiceData = async (userID, name, type, price, start, end) => {
+    const addServiceData = async (userID, name, price, start, end) => {
         const data = {
             serverTime: serverTimestamp(),
             sName: name,
-            sType: type,
             sPrice: price,
             sStart: start,
             sEnd: end

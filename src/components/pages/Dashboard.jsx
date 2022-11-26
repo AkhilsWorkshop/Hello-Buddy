@@ -2,6 +2,7 @@ import SideMenu from "../dashboard/SideMenu"
 import { Tab } from '@headlessui/react'
 import Content from "../dashboard/Content"
 import { UserAuth } from "../../server/AuthContext"
+import { useEffect } from "react"
 
 const Dashboard = () => {
 

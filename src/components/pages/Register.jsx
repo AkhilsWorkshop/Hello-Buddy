@@ -42,13 +42,13 @@ const Register = () => {
                         <p className="font-bold text-2xl">Save money now,</p>
                         <p className="text-sm text-center">Create an account to register your subscriptions and start saving!</p>
                     </div>
-                    <form className="flex flex-col" onSubmit={handleSubmit}>
+                    <form className="flex flex-col text-base" onSubmit={handleSubmit}>
                         <div className="mb-6">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email address</label>
+                            <label htmlFor="email" className="block mb-2 font-medium">Your email address</label>
                             <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required />
                         </div>
                         <div className="mb-6">
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
+                            <label htmlFor="password" className="block mb-2 font-medium">Your password</label>
                             <input type="password" id="password" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
                         {error

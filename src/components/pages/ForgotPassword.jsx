@@ -41,9 +41,9 @@ const ForgotPassword = () => {
                         <p className="text-sm text-center">It's easy to reset it! </p>
                     </div>
 
-                    <form className="flex flex-col" onSubmit={handleSubmit}>
+                    <form className="flex flex-col text-base" onSubmit={handleSubmit}>
                         <div className="mb-6">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email</label>
+                            <label htmlFor="email" className="block mb-2 font-medium">Your email</label>
                             <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)} required />
                         </div>
                         {message

@@ -86,7 +86,7 @@ const AccountSettings = () => {
                     <ContentTitle title="Account Settings" imageIcon={<RiSettings3Fill size={25} />} />
 
                     <div className="flex flex-col gap-7 w-full bg-[#ffffff] shadow-lg rounded-lg p-10">
-                        <form className="flex flex-col gap-2" onSubmit={handleChange}>
+                        <form className="flex flex-col gap-2 text-base" onSubmit={handleChange}>
                             <label htmlFor="email" className="text-sm font-semibold">Email</label>
                             <div className="flex gap-2">
 
@@ -97,7 +97,7 @@ const AccountSettings = () => {
                                     </>
                                     :
                                     <>
-                                        <input type="email" id="email" className="shadow-sm bg-fourth text-sm rounded-md grow md:grow-0 lg:w-1/3 p-2.5 py-3" placeholder={user.email} onChange={(e) => setEmail(e.target.value)} required />
+                                        <input type="email" id="email" className="shadow-sm bg-fourth rounded-md grow md:grow-0 lg:w-1/3 p-2.5 py-3" placeholder={user.email} onChange={(e) => setEmail(e.target.value)} required />
                                         <button type="submit" className="p-3 bg-third rounded-md text-sm font-medium duration-200 hover:bg-third/80">Change</button>
                                     </>
                                 }

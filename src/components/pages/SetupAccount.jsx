@@ -20,6 +20,8 @@ const SetupAccount = () => {
         try {
             await saveAccountDetails(user.uid, name, age, currency);
             navigate("/dashboard")
+            window.location.reload(false);
+
         } catch (e) {
             setError("Error Occured! Try Again")
             console.log(e.code);
