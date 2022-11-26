@@ -24,6 +24,7 @@ const Services = () => {
 
             await addServiceData(user.uid, serviceName, servicePrice, serviceStart, serviceEnd);
             window.location.reload(false);
+            window.scroll(0, 0)
 
         } catch (e) {
             console.log(e.message)

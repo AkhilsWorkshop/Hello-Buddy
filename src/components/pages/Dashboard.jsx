@@ -2,11 +2,20 @@ import SideMenu from "../dashboard/SideMenu"
 import { Tab } from '@headlessui/react'
 import Content from "../dashboard/Content"
 import { UserAuth } from "../../server/AuthContext"
+import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 const Dashboard = () => {
 
     const { userData } = UserAuth();
+    console.log(userData)
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (userData === undefined)
+            navigate("/setup-account")
+    }, [])
 
     return (
         <div className="bg-fourth">

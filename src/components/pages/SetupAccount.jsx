@@ -21,6 +21,7 @@ const SetupAccount = () => {
             await saveAccountDetails(user.uid, name, age, currency);
             navigate("/dashboard")
             window.location.reload(false);
+            window.scroll(0, 0)
 
         } catch (e) {
             setError("Error Occured! Try Again")
@@ -38,18 +39,18 @@ const SetupAccount = () => {
                         <p className="font-bold text-2xl">Account created!</p>
                         <p className="text-sm text-center">Provide few more details and start saving!</p>
                     </div>
-                    <form className="flex flex-col" onSubmit={handleSubmit}>
+                    <form className="flex flex-col text-base" onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <label className="block mb-2 text-sm font-medium">Your full name</label>
-                            <input type="text" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" onChange={(e) => setName(e.target.value)} required />
+                            <input type="text" className="shadow-sm bg-fourth rounded-sm block w-full p-2.5 py-3" onChange={(e) => setName(e.target.value)} required />
                         </div>
                         <div className="mb-6">
                             <label className="block mb-2 text-sm font-medium">Your age</label>
-                            <input type="number" className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" onChange={(e) => setAge(e.target.value)} required />
+                            <input type="number" className="shadow-sm bg-fourth rounded-sm block w-full p-2.5 py-3" onChange={(e) => setAge(e.target.value)} required />
                         </div>
                         <div className="mb-6">
                             <label className="block mb-2 text-sm font-medium">Currency type</label>
-                            <select value={currency} onChange={(e) => setCurrrency(e.target.value)} className="shadow-sm bg-fourth text-sm rounded-sm block w-full p-2.5 py-3" required>
+                            <select value={currency} onChange={(e) => setCurrrency(e.target.value)} className="shadow-sm bg-fourth rounded-sm block w-full p-2.5 py-3" required>
                                 <option value="USD">USD $</option>
                                 <option value="EUR">EUR0 €</option>
                             </select>

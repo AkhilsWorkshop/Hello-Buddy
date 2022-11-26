@@ -18,6 +18,7 @@ const Register = () => {
         try {
             await createUser(email, password);
             navigate("/setup-account")
+            window.scroll(0, 0)
         } catch (e) {
             e.code === "auth/email-already-in-use" ? setError("Account already exists") : setError("Error Occured! Try Again")
             console.log(e.code);

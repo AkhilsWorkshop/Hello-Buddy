@@ -10,7 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('')
-    const { login, getUserData } = UserAuth();
+    const { login } = UserAuth();
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -19,6 +19,7 @@ const Login = () => {
         try {
             await login(email, password);
             navigate("/dashboard");
+            window.scroll(0, 0)
         } catch (e) {
             switch (e.code) {
                 case "auth/user-not-found":
