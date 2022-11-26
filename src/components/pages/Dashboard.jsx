@@ -13,8 +13,8 @@ const Dashboard = () => {
             <div className="max-w-screen-xl mx-auto flex flex-col items-center gap-10 md:p-10 mt-20 relative">
 
                 {userData !== null ?
-                    <Tab.Group defaultIndex={3}>
-                        <div className="flex flex-col md:flex-row w-full gap-10">
+                    <Tab.Group>
+                        <div className="flex flex-col md:flex-row w-full md:gap-10">
                             <SideMenu />
                             <Content />
                         </div>

@@ -9,18 +9,18 @@ export const sideMenu = [
         name: "Dashboard",
         icon: AiFillSignal,
     },
+    // {
+    //     id: 2,
+    //     name: "Services",
+    //     icon: MdDesignServices,
+    // },
+    // {
+    //     id: 3,
+    //     name: "Notification",
+    //     icon: MdNotifications,
+    // },
     {
         id: 2,
-        name: "Services",
-        icon: MdDesignServices,
-    },
-    {
-        id: 3,
-        name: "Notification",
-        icon: MdNotifications,
-    },
-    {
-        id: 4,
         name: "Account Settings",
         icon: RiSettings3Fill,
     },

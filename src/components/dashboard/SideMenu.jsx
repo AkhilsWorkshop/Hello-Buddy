@@ -19,45 +19,25 @@ const SideMenu = () => {
         }
     }
 
-    console.log(isActive)
     return (
         <>
             {userData !== null ?
-                <div className="flex flex-col gap-7 justify-center items-center h-fit bg-secondary text-fourth shadow-secondary shadow-md rounded-lg p-10">
-                    <p className="font-bold text-xl self-start">Hi {userData.fullName},</p>
+                <div className="flex flex-col gap-3 md:gap-7 justify-center items-center h-fit bg-primary md:bg-secondary text-fourth md:shadow-secondary md:shadow-md md:rounded-lg px-10 py-5 md:p-10">
+                    <div className='flex justify-between w-full'>
+                        <p className="font-bold text-3xl md:text-xl">Hi {userData.fullName},</p>
+                        <button onClick={handleLogout} className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex md:hidden self-center">Logout</button>
+                    </div>
+
                     <div className='flex'>
-                        <Menu>
-                            <Menu.Button className="flex md:hidden">More</Menu.Button>
-                            <Menu.Items className="flex md:hidden">
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            className={`${active && 'bg-blue-500'}`}
-                                            href="/account-settings"
-                                        >
-                                            Account settings
-                                        </a>
-                                    )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            className={`${active && 'bg-blue-500'}`}
-                                            href="/account-settings"
-                                        >
-                                            Documentation
-                                        </a>
-                                    )}
-                                </Menu.Item>
-                            </Menu.Items>
-                        </Menu>
-                        <Tab.List className="hidden md:flex flex-col gap-3 items-start w-full">
+
+                        <Tab.List className="flex md:flex-col gap-3 items-start w-full bg-secondary p-3 md:p-0 rounded-md">
                             {sideMenu.map((eachItem, index) => (
-                                <Tab key={eachItem.id} className={isActive === index ? `text-third flex items-center justify-center gap-3 selection:border-none` : `flex items-center justify-center gap-3 selection:border-none`} onClick={() => switchTab(index)}><eachItem.icon size={20} />{eachItem.name}</Tab>
+                                <Tab key={eachItem.id} className={isActive === index ? `text-third flex items-center justify-center gap-3 selection:border-none` : `flex items-center justify-center gap-3 selection:border-none`} onClick={() => switchTab(index)}><eachItem.icon size={20} className="hidden md:flex" />{eachItem.name}</Tab>
                             ))}
                         </Tab.List>
+
                     </div>
-                    <button onClick={handleLogout} className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 flex self-center">Logout</button>
+                    <button onClick={handleLogout} className="text-white bg-third/80 hover:bg-third font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300 hidden md:flex self-center">Logout</button>
                 </div>
                 :
                 <></>

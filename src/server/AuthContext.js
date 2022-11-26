@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail } from "firebase/auth";
 import { auth, db } from "./fireBase";
-import { doc, setDoc, getDoc, updateDoc, addDoc, collection, getDocs, serverTimestamp, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, addDoc, collection, getDocs, serverTimestamp, onSnapshot, orderBy } from "firebase/firestore";
 
 // Creating a new context
 const UserContext = createContext(null)
@@ -34,7 +34,6 @@ export const AuthContextProvider = ({ children }) => {
         const docRef = doc(db, "userData", currentUser.uid);
         const docSnap = await getDoc(docRef);
         try {
-            console.log("Document data:", docSnap.data());
             setUserData(docSnap.data());
         } catch {
             console.log("No documents found")
@@ -42,10 +41,7 @@ export const AuthContextProvider = ({ children }) => {
     }
 
     const addServiceData = async (userID, name, type, price, start, end) => {
-        const time = new Date();
-        const dateTime = time.getDate() + "/" + time.getMonth() + "/" + time.getFullYear() + " " + time.getHours() + ":" + time.getMinutes()
         const data = {
-            clientTime: dateTime,
             serverTime: serverTimestamp(),
             sName: name,
             sType: type,
@@ -55,13 +51,12 @@ export const AuthContextProvider = ({ children }) => {
         }
         const dbRef = collection(db, `${userID}`);
         await addDoc(dbRef, data);
-        // await addDoc(doc(db, `${userID}`), data);
     }
 
-
     const getServiceData = async (userID) => {
-        const querySnapshot = await getDocs(collection(db, userID));
+        const querySnapshot = await getDocs(collection(db, userID), orderBy("sName", "asc"));
         setServiceData(querySnapshot)
+        return querySnapshot
     }
 
     const updateUserData = async (value) => {
@@ -91,26 +86,18 @@ export const AuthContextProvider = ({ children }) => {
         return updateEmail(user, email)
     }
 
-    // Other Functions
-
     // For switching active tab in Dashboard
     const switchTab = (index) => {
         setIsActive(index)
     }
 
-    // For getting current time
-    const getCurrentTime = () => {
-        const date = Date.now();
-        console.log(date)
-        return date
-    }
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log(currentUser)
             setUser(currentUser)
-            getUserData(currentUser)
-            getServiceData(currentUser.uid)
+            if (currentUser !== null) {
+                getUserData(currentUser)
+                getServiceData(currentUser.uid)
+            }
         })
         return () => {
             unsubscribe()
@@ -118,7 +105,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ createUser, saveAccountDetails, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, getCurrentTime, addServiceData, serviceData }}>
+        <UserContext.Provider value={{ createUser, saveAccountDetails, logout, login, resetPassword, updateEmailAddress, verifyEmail, getUserData, updateUserData, userData, user, isActive, switchTab, addServiceData, getServiceData, serviceData }}>
             {children}
         </UserContext.Provider>
     )
