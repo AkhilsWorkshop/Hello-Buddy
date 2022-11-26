@@ -8,18 +8,7 @@ const Navbar = () => {
 
     const [isOpen, setIsOpen] = useState(false)
 
-    const { user, logout } = UserAuth()
-    const navigate = useNavigate()
-
-    const handleLogout = async () => {
-        try {
-            await logout()
-            navigate("/")
-            console.log("Logged out")
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
+    const { user } = UserAuth()
 
     const menuItems = [
         {
@@ -66,7 +55,7 @@ const Navbar = () => {
                             <div>
                                 {menuItems.map((eachItem, index) => (
                                     <div key={index} className="border border-t-0 border-x-0 border-primary px-10 py-5">
-                                        <Link to={eachItem.url} className="text-xl hover:text-third duration-300 transition-all">{eachItem.name}</Link>
+                                        <Link onClick={() => setIsOpen(false)} to={eachItem.url} className="text-xl hover:text-third duration-300 transition-all">{eachItem.name}</Link>
                                     </div>
                                 ))}
                             </div>
@@ -75,10 +64,10 @@ const Navbar = () => {
                                 <></>
                                 :
                                 <div className="border border-t-0 border-x-0 border-primary px-10 py-5">
-                                    <Link to="/login" className="text-xl hover:text-third duration-300 transition-all">Login</Link>
+                                    <Link onClick={() => setIsOpen(false)} to="/login" className="text-xl hover:text-third duration-300 transition-all">Login</Link>
                                 </div>
                             }
-                            <Link to={user ? "/dashboard" : "/register"} className="mx-10 my-5 gap-1 border-2 text-xl text-center border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">{user ? "My Account" : "Create an Account"}</Link>
+                            <Link onClick={() => setIsOpen(false)} to={user ? "/dashboard" : "/register"} className="mx-10 my-5 gap-1 border-2 text-xl text-center border-third rounded-lg p-3 hover:bg-third hover:text-secondary font-semibold duration-300 transition-all">{user ? "My Account" : "Create an Account"}</Link>
                         </div>
                     </div>
                 </div>
