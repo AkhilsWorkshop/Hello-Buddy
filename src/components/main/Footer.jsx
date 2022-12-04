@@ -23,6 +23,8 @@ const Footer = () => {
                         <div className="flex flex-col items-center">
                             <p className="font-bold text-lg">&copy; 2022 Hello Buddy</p>
                             <p>All Rights Reserved</p>
+                            <p className="font-bold text-secondary">Built & Designed by <a href="https://akhilkumar.dev/" target="_blank" rel="noreferrer" className="text-primary duration-300 hover:text-[#EAB308] cursor-pointer">Akhil</a>
+                            </p>
                         </div>
                     </div>
                 </div>

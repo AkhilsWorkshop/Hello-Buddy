@@ -12,7 +12,7 @@ const Users = () => {
 
                 <div className="flex flex-col flex-1 gap-5 text-fourth">
 
-                    <p className="text-2xl font-bold leading-tight md:pr-32">Trusted by 2.4 M+ users</p>
+                    <p className="text-2xl font-bold leading-tight md:pr-32">Trusted by many users worldwide</p>
                     <div className="flex grow h-1 w-1/3 bg-third"></div>
                     <div className="flex">
                         <AiFillStar size={25} className="text-[#ffd931]" />
